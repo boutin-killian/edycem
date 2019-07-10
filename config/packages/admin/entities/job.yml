@@ -10,9 +10,11 @@ easy_admin:
                 dql_filter: "entity.isValidate = 1"
                 fields:
                     - { property: name, label: entity.job.name }
+                    - { property: isValidate, label: entity.job.isValidate }
             form:
                 fields:
                     - { property: name, label: entity.job.name }
+                    - { property: isValidate, label: entity.job.isValidate }
             disabled_actions: ['delete']
 
         NotValidateJob:
@@ -26,7 +28,9 @@ easy_admin:
                 dql_filter: "entity.isValidate = 0"
                 fields:
                     - { property: name, label: entity.job.name }
+                    - { property: isValidate, label: entity.job.isValidate }
             form:
                 fields:
                     - { property: name, label: entity.job.name }
+                    - { property: isValidate, label: entity.job.isValidate }
             disabled_actions: ['delete', 'new']

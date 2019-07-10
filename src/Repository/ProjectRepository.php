@@ -29,4 +29,51 @@ class ProjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findByWithFields($fields = 'project.id', $limit = 8)
+    {
+        $lastMonth = new \DateTime();
+        $lastMonth->format('Y-m-d H:i:s');
+        $lastMonth->modify( 'previous month' );
+        return $this->_em->createQueryBuilder()
+            ->select($fields)
+            ->from($this::getEntityName(), 'project')
+            ->where('project.created_at > :lastMonth')
+            ->andWhere('project.isValidate = 1')
+            ->setParameter('lastMonth', $lastMonth)
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getLastProject($userId)
+    {
+        $query = $this->_em->createQuery(
+            'SELECT p.id
+            FROM App\Entity\WorkingTime wt
+            LEFT JOIN wt.project p
+            WHERE wt.user = :user_id
+            AND p.isValidate = 1
+            ORDER BY wt.id DESC'
+        )
+            ->setParameter('user_id', $userId)
+            ->setMaxResults(1);
+
+        // returns an array of Product objects
+        return $query->execute();
+    }
+
+    public function getLastCreatedProject()
+    {
+        $query = $this->_em->createQuery(
+            'SELECT p.id
+            FROM App\Entity\Project p
+            WHERE p.isValidate = 1
+            ORDER BY p.created_at DESC'
+        )
+            ->setMaxResults(1);
+
+        // returns an array of Product objects
+        return $query->execute();
+    }
 }
