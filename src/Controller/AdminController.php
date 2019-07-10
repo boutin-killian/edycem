@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Entity\Post;
 use App\Entity\User;
 use App\Entity\Job;
+use App\Entity\Activity;
+use App\Entity\Project;
+use App\Entity\Task;
+use App\Entity\WorkingTime;
 use App\Exporter\NormalizerConfigPass;
 use App\Exporter\PropertyConfigPass;
 use App\Exporter\TemplateConfigPass;
@@ -54,20 +58,64 @@ class AdminController extends BaseAdminController
             ->getRepository(Job::class)
             ->getCountJobs();
 
+        $activities = $this->getDoctrine()
+            ->getRepository(Activity::class)
+            ->getCountActivities();
+
+        $projects = $this->getDoctrine()
+            ->getRepository(Project::class)
+            ->getCountProjects();
+
+        $tasks = $this->getDoctrine()
+            ->getRepository(Task::class)
+            ->getCountTasks();
+
+        $workingtimes = $this->getDoctrine()
+            ->getRepository(WorkingTime::class)
+            ->getCountWTs();
+
 
         $views = array(
+            'Task' => array(
+                'name' => 'tasks',
+                'icon' => 'dashboard',
+                'number' => $tasks,
+                'menuIndex' => '1',
+                'submenuIndex' => '0'
+            ),
+            'Activity' => array(
+                'name' => 'activities',
+                'icon' => 'dashboard',
+                'number' => $activities,
+                'menuIndex' => '2',
+                'submenuIndex' => '0'
+            ),
+            'Job' => array(
+                'name' => 'jobs',
+                'icon' => 'dashboard',
+                'number' => $jobs,
+                'menuIndex' => '3',
+                'submenuIndex' => '0'
+            ),
+            'WorkingTime' => array(
+                'name' => 'workingtimes',
+                'icon' => 'dashboard',
+                'number' => $workingtimes,
+                'menuIndex' => '4',
+                'submenuIndex' => '0'
+            ),
+            'Project' => array(
+                'name' => 'projects',
+                'icon' => 'dashboard',
+                'number' => $projects,
+                'menuIndex' => '5',
+                'submenuIndex' => '0'
+            ),
             'User' => array(
                 'name' => 'users',
                 'icon' => 'user',
                 'number' => $users,
                 'menuIndex' => '6',
-                'submenuIndex' => '0'
-            ),
-            'Job' => array(
-                'name' => 'jobs',
-                'icon' => '',
-                'number' => $jobs,
-                'menuIndex' => '2',
                 'submenuIndex' => '0'
             ),
         );

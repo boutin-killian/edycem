@@ -19,6 +19,16 @@ class WorkingTimeRepository extends ServiceEntityRepository
         parent::__construct($registry, WorkingTime::class);
     }
 
+    public function getCountWTs()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select('COUNT(u)')
+            ->from($this::getEntityName(), 'u')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getSingleScalarResult();
+    }
+
     public function findAllWithFields($fields = 'working_time')
     {
         return $this->_em->createQueryBuilder()

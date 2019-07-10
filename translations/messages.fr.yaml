@@ -83,6 +83,10 @@ entity.workingtime.description: 'Descriptif'
 entity.workingtime.spentTime: 'Tps passé (h)'
 
 menu.choice.jobs: 'Métiers'
+menu.choice.activities: 'Activités'
+menu.choice.projects: 'Projets'
+menu.choice.tasks: 'Tâches'
+menu.choice.workingtimes: 'Temps de travail'
 
 
 

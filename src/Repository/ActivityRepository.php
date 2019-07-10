@@ -19,6 +19,16 @@ class ActivityRepository extends ServiceEntityRepository
         parent::__construct($registry, Activity::class);
     }
 
+    public function getCountActivities()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select('COUNT(u)')
+            ->from($this::getEntityName(), 'u')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getSingleScalarResult();
+    }
+
     public function findAllWithFields($fields = 'activity', $where = '1 = 1')
     {
         return $this->_em->createQueryBuilder()
