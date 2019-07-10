@@ -19,11 +19,12 @@ class JobRepository extends ServiceEntityRepository
         parent::__construct($registry, Job::class);
     }
 
-    public function findAllWithFields($fields = 'job')
+    public function findAllWithFields($fields = 'job', $where = '1 = 1')
     {
         return $this->_em->createQueryBuilder()
             ->select($fields)
             ->from($this::getEntityName(), 'job')
+            ->where($where)
             ->getQuery()
             ->getResult();
     }

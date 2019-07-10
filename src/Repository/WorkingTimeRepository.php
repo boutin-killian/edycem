@@ -27,4 +27,19 @@ class WorkingTimeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getMostUsed($whereMostUsed)
+    {
+        $query = $this->_em->createQuery(
+            'SELECT IDENTITY(wt.project) as id
+            FROM App\Entity\WorkingTime wt
+            WHERE wt.isValidate = 1
+            AND wt.project IN ('.$whereMostUsed.')
+            GROUP BY wt.project
+            ORDER BY SUM(wt.spentTime) DESC'
+        );
+
+        // returns an array of Product objects
+        return $query->execute();
+    }
 }

@@ -53,10 +53,10 @@ class ApiController extends AbstractController
                     $object = new WorkingTime();
                     $object->setUser(isset($_POST['user_id']) ? $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $_POST['user_id']]) : '');
                     $object->setProject(isset($_POST['project_id']) ? $this->getDoctrine()->getRepository('App\Entity\Project')->findOneBy(['id' => $_POST['project_id']]) : '');
-                    $object->setTask(isset($_POST['task_id'])? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => $_POST['task_id']]) : '');
-                    $object->setDate(new \DateTime(isset($_POST['date'])? $_POST['date'] : ''));
-                    $object->setSpentTime(isset($_POST['spent_time'])? $_POST['spent_time'] : '');
-                    $object->setDescription(isset($_POST['description']) ? $_POST['description']:'');
+                    $object->setTask(isset($_POST['task_id']) ? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => $_POST['task_id']]) : '');
+                    $object->setDate(new \DateTime(isset($_POST['date']) ? $_POST['date'] : ''));
+                    $object->setSpentTime(isset($_POST['spent_time']) ? $_POST['spent_time'] : '');
+                    $object->setDescription(isset($_POST['description']) ? $_POST['description'] : '');
 
                     $this->em->persist($object);
                     $this->em->flush();
@@ -67,7 +67,9 @@ class ApiController extends AbstractController
                     $user = $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $_POST['id']]);
                     $object = clone $user;
 
-                    if (isset($_POST['date_rgpd'])) { $object->setDateRgpd(new \DateTime($_POST['date_rgpd']));};
+                    if (isset($_POST['date_rgpd'])) {
+                        $object->setDateRgpd(new \DateTime($_POST['date_rgpd']));
+                    };
 
                     $this->em->merge($object);
                     $this->em->flush();
@@ -120,7 +122,34 @@ class ApiController extends AbstractController
                 if ($request->query->get('access_token') !== null) {
                     $tokenApi = $request->query->get('access_token');
                     if ($this->canAccessApi($tokenApi)) {
-                        $entityObject = $this->getDoctrine()->getRepository($entityPath)->findAllWithFields($fields, $where);
+
+                        if ($request->query->get('action') && $request->query->get('action') == 'lastProjects') {
+
+                            if ($request->query->get('id')) {
+
+                                // Get last project of user
+                                $lastProjectUser = $this->getDoctrine()->getRepository('App\Entity\Project')->getLastProject($request->query->get('id'));
+                                if (empty($lastProjectUser)) {$lastProjectUser[0]['id'] = 0;}
+
+                                // Get last project created
+                                $lastProjectCreated = $this->getDoctrine()->getRepository('App\Entity\Project')->getLastCreatedProject();
+                                if (empty($lastProjectCreated)) {$lastProjectCreated[0]['id'] = 0;}
+
+                                // Get 8 most used projects order by most used (last month)
+                                $allProjectsLastMonth = $this->getDoctrine()->getRepository('App\Entity\Project')->findByWithFields();
+                                if (empty($allProjectsLastMonth)) {$allProjectsLastMonth[0]['id'] = 0;}
+
+                                $whereMostUsed = implode(',', array_map(function($value){return $value['id']; }, $allProjectsLastMonth));
+                                $mostUsedProject = $this->getDoctrine()->getRepository('App\Entity\WorkingTime')->getMostUsed($whereMostUsed);
+
+                                $entityObject = array_map(function ($value) {return intval($value['id']);}, array_merge($lastProjectUser, $lastProjectCreated, $mostUsedProject));
+                            } else {
+                                return new JsonResponse('Aucun paramètre "id" correspondant à l\'id utilisateur trouvé');
+                            }
+
+                        } else {
+                            $entityObject = $this->getDoctrine()->getRepository($entityPath)->findAllWithFields($fields, $where);
+                        }
                         return $this->serializeContent($entityObject);
                     } else {
                         return new JsonResponse('Token d\'accès à l\'API invalide');
@@ -134,7 +163,8 @@ class ApiController extends AbstractController
         throw new NotFoundHttpException();
     }
 
-    public function getApiConfig($routeName, $routeType)
+    public
+    function getApiConfig($routeName, $routeType)
     {
         $apiConfig = Yaml::parseFile('../config/api.yaml');
 
@@ -152,7 +182,8 @@ class ApiController extends AbstractController
         return false;
     }
 
-    public function serializeContent($entityObject)
+    public
+    function serializeContent($entityObject)
     {
         $serializer = SerializerBuilder::create()->build();
 
@@ -165,7 +196,8 @@ class ApiController extends AbstractController
     }
 
     /* Check if the API Token is valid */
-    public function canAccessApi($token)
+    public
+    function canAccessApi($token)
     {
         if ($token) {
             $user = $this->em->getRepository(User::class)
