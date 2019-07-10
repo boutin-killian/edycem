@@ -39,11 +39,16 @@
   padding: 20px;
   border-top: 0;
   color: #666;
+  a {
+    display: none;
+  }
 }
 
 .login-box-body .form-group label {
   flex: initial;
 }
+
+
 
 .content-body form {
   background: white;

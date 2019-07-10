@@ -82,6 +82,8 @@ entity.workingtime.date: 'Date'
 entity.workingtime.description: 'Descriptif'
 entity.workingtime.spentTime: 'Tps passé (h)'
 
+menu.choice.jobs: 'Métiers'
+
 
 
 title:

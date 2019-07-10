@@ -28,7 +28,7 @@ class Task
     private $activity;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=6, scale=2)
      */
     private $defaultTime = 0;
 
@@ -70,14 +70,14 @@ class Task
         $this->activity = $activity;
     }
 
-    public function getDefaultTime(): ?int
+    public function getDefaultTime()
     {
-        return $this->defaultTime;
+        return $this->defaultTime / 60;
     }
 
-    public function setDefaultTime(int $defaultTime): self
+    public function setDefaultTime($defaultTime): self
     {
-        $this->defaultTime = $defaultTime;
+        $this->defaultTime = $defaultTime * 60;
 
         return $this;
     }

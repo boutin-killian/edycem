@@ -19,6 +19,16 @@ class JobRepository extends ServiceEntityRepository
         parent::__construct($registry, Job::class);
     }
 
+    public function getCountJobs()
+    {
+        return $this->_em->createQueryBuilder()
+            ->select('COUNT(u)')
+            ->from($this::getEntityName(), 'u')
+            ->getQuery()
+            ->setMaxResults(1)
+            ->getSingleScalarResult();
+    }
+
     public function findAllWithFields($fields = 'job')
     {
         return $this->_em->createQueryBuilder()

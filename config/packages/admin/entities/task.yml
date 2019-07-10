@@ -12,7 +12,6 @@ easy_admin:
                     - { property: activity.name, label: entity.activity.name }
                     - { property: name, label: entity.task.name }
                     - { property: defaultTime, label: entity.task.defaultTime }
-                    - { property: isValidate, type: 'boolean', label: entity.task.isValidate}
             form:
                 fields:
                     - { property: activity, label: entity.activity.name }
@@ -34,7 +33,6 @@ easy_admin:
                     - { property: activity.name, label: entity.activity.name }
                     - { property: name, label: entity.task.name }
                     - { property: defaultTime, label: entity.task.defaultTime }
-                    - { property: isValidate, type: 'boolean', label: entity.task.isValidate}
             form:
                 fields:
                     - { property: activity, label: entity.activity.name }

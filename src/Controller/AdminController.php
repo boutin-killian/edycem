@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Post;
 use App\Entity\User;
+use App\Entity\Job;
 use App\Exporter\NormalizerConfigPass;
 use App\Exporter\PropertyConfigPass;
 use App\Exporter\TemplateConfigPass;
@@ -49,11 +50,23 @@ class AdminController extends BaseAdminController
             ->getRepository(User::class)
             ->getCountUsers();
 
+        $jobs = $this->getDoctrine()
+            ->getRepository(Job::class)
+            ->getCountJobs();
+
+
         $views = array(
             'User' => array(
                 'name' => 'users',
                 'icon' => 'user',
                 'number' => $users,
+                'menuIndex' => '6',
+                'submenuIndex' => '0'
+            ),
+            'Job' => array(
+                'name' => 'jobs',
+                'icon' => '',
+                'number' => $jobs,
                 'menuIndex' => '2',
                 'submenuIndex' => '0'
             ),
