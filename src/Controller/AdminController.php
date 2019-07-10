@@ -78,35 +78,35 @@ class AdminController extends BaseAdminController
         $views = array(
             'Task' => array(
                 'name' => 'tasks',
-                'icon' => 'dashboard',
+                'icon' => 'tasks',
                 'number' => $tasks,
                 'menuIndex' => '1',
                 'submenuIndex' => '0'
             ),
             'Activity' => array(
                 'name' => 'activities',
-                'icon' => 'dashboard',
+                'icon' => 'ravelry',
                 'number' => $activities,
                 'menuIndex' => '2',
                 'submenuIndex' => '0'
             ),
             'Job' => array(
                 'name' => 'jobs',
-                'icon' => 'dashboard',
+                'icon' => 'briefcase',
                 'number' => $jobs,
                 'menuIndex' => '3',
                 'submenuIndex' => '0'
             ),
             'WorkingTime' => array(
                 'name' => 'workingtimes',
-                'icon' => 'dashboard',
+                'icon' => 'clock-o',
                 'number' => $workingtimes,
                 'menuIndex' => '4',
                 'submenuIndex' => '0'
             ),
             'Project' => array(
                 'name' => 'projects',
-                'icon' => 'dashboard',
+                'icon' => 'pencil-square-o',
                 'number' => $projects,
                 'menuIndex' => '5',
                 'submenuIndex' => '0'
