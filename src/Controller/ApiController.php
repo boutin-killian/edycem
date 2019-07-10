@@ -64,11 +64,13 @@ class ApiController extends AbstractController
 
                 // Update User RGPD
                 if ($apiConfig['name'] === 'User') {
-                    $user = $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $_POST['id']]);
+                    //$post = json_decode(file_get_contents('php://input'));
+                    $post = (array) json_decode(file_get_contents('php://input'));
+                    $user = $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $post['id']]);
                     $object = clone $user;
 
-                    if (isset($_POST['date_rgpd'])) {
-                        $object->setDateRgpd(new \DateTime($_POST['date_rgpd']));
+                    if (isset($post['date_rgpd'])) {
+                        $object->setDateRgpd(new \DateTime($post['date_rgpd']));
                     };
 
                     $this->em->merge($object);

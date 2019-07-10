@@ -2,6 +2,12 @@
     "behat/transliterator": {
         "version": "v1.2.0"
     },
+    "deployer/deployer": {
+        "version": "v6.4.5"
+    },
+    "deployer/phar-update": {
+        "version": "v2.1.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
@@ -169,6 +175,9 @@
     },
     "phpoption/phpoption": {
         "version": "1.5.0"
+    },
+    "pimple/pimple": {
+        "version": "v3.2.3"
     },
     "psr/cache": {
         "version": "1.0.1"
