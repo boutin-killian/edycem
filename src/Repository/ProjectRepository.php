@@ -24,6 +24,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->_em->createQueryBuilder()
             ->select('COUNT(u)')
             ->from($this::getEntityName(), 'u')
+            ->where('u.isValidate = 1')
             ->getQuery()
             ->setMaxResults(1)
             ->getSingleScalarResult();

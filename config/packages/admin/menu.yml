@@ -9,7 +9,7 @@ easy_admin:
 
       - label: 'Taches'
         role: ROLE_USER
-        icon: 'dashboard'
+        icon: 'tasks'
         children:
           - label: entity.task.title
             entity: 'Task'
@@ -18,7 +18,7 @@ easy_admin:
 
       - label: 'Activités'
         role: ROLE_USER
-        icon: 'dashboard'
+        icon: 'ravelry'
         children:
           - label: entity.activity.title
             entity: 'Activity'
@@ -27,7 +27,7 @@ easy_admin:
 
       - label: 'Métiers'
         role: ROLE_USER
-        icon: 'dashboard'
+        icon: 'briefcase'
         children:
           - label: entity.job.title
             entity: 'Job'
@@ -36,7 +36,7 @@ easy_admin:
 
       - label: 'Temps de travail'
         role: ROLE_USER
-        icon: 'dashboard'
+        icon: 'clock-o'
         children:
           - label: entity.workingtime.title
             entity: 'WorkingTime'
@@ -45,7 +45,7 @@ easy_admin:
 
       - label: 'Projets'
         role: ROLE_USER
-        icon: 'dashboard'
+        icon: 'pencil-square-o'
         children:
           - label: entity.project.title
             entity: 'Project'
