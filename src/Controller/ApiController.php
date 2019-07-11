@@ -55,7 +55,7 @@ class ApiController extends AbstractController
                     $object->setProject(isset($_POST['project_id']) ? $this->getDoctrine()->getRepository('App\Entity\Project')->findOneBy(['id' => $_POST['project_id']]) : '');
                     $object->setTask(isset($_POST['task_id']) ? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => $_POST['task_id']]) : '');
                     $object->setDate(new \DateTime(isset($_POST['date']) ? $_POST['date'] : ''));
-                    $object->setSpentTime(isset($_POST['spent_time']) ? $_POST['spent_time'] : '');
+                    $object->setSpentTime(isset($_POST['spent_time']) ? $_POST['spent_time'] : 0);
                     $object->setDescription(isset($_POST['description']) ? $_POST['description'] : '');
 
                     $this->em->persist($object);
