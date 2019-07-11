@@ -19,8 +19,13 @@ easy_admin:
                     - { property: description, label: entity.project.description }
             form:
                 fields:
-                    - { property: name, label: entity.WorkingTime.name }
-            disabled_actions: ['new', 'edit', 'delete']
+                    - { property: user, label: entity.user.name }
+                    - { property: project, label: entity.project.name }
+                    - { property: task, label: entity.activity.name }
+                    - { property: date,  label: entity.project.created_at }
+                    - { property: spentTime, label: entity.project.spentTime }
+                    - { property: description, label: entity.project.description }
+            disabled_actions: ['delete']
 
             export:
                 fields:
@@ -37,9 +42,9 @@ easy_admin:
         NotValidateWorkingTime:
             label: entity.WorkingTime.label
             class: App\Entity\WorkingTime
-            role: ROLE_ADMIN
             new:
                 role: ROLE_SUPER_ADMIN
+            role: ROLE_ADMIN
             list:
                 title: entity.WorkingTime.list
                 dql_filter: "entity.isValidate = 0"
@@ -52,7 +57,13 @@ easy_admin:
                     - { property: description, label: entity.project.description }
             form:
                 fields:
-                    - { property: name, label: entity.WorkingTime.name }
+                    - { property: user, label: entity.user.name }
+                    - { property: project, label: entity.project.name }
+                    - { property: task, label: entity.activity.name }
+                    - { property: date,  label: entity.project.created_at }
+                    - { property: spentTime, type: time, label: entity.project.spentTime }
+                    - { property: description, label: entity.project.description }
+            disabled_actions: ['new', 'edit', 'delete']
 
             export:
                 fields:
