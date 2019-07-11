@@ -162,10 +162,6 @@ class WorkingTime
         $vars['task'] = $vars['task']->toJSON();
         $vars['date'] = get_object_vars($vars['date']);
 
-        echo "<pre>";
-        var_dump($vars);
-        echo "</pre>";
-        die();
         return $vars;
     }
 

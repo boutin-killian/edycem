@@ -18,7 +18,7 @@ easy_admin:
 
       - label: 'Activités'
         role: ROLE_USER
-        icon: 'ravelry'
+        icon: 'list-ul'
         children:
           - label: entity.activity.title
             entity: 'Activity'

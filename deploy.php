@@ -8,18 +8,20 @@ set('allow_anonymous_stats', false);
 
 // Project name
 set('application', 'edicem');
-
 set('ssh_type', 'native');
-set('ssh_multiplexing', true);
+set('use_relative_symlinks', false);
+
+set('ssh_multiplexing', false);
+set('git_tty', false);
 
 set('clear_use_sudo', true);
 set('cleanup_use_sudo', true);
 set('writable_use_sudo', true);
 
 // Project repository
-set('repository', 'https://github.com/boutin-killian/edycem.git');
+set('repository', 'git@github.com:boutin-killian/edycem.git');
 
-// Shared files/dirs between deploys 
+// Shared files/dirs between deploys
 add('shared_files', [
     '.env',
     'public/.htaccess',
@@ -27,7 +29,7 @@ add('shared_files', [
 ]);
 add('shared_dirs', []);
 
-// Writable dirs by web server 
+// Writable dirs by web server
 add('writable_dirs', []);
 
 set('clear_paths', [
@@ -54,7 +56,7 @@ host('production')
     ->user('root')
     ->forwardAgent()
     ->set('deploy_path', '/var/www/html');
-    
+
 // Tasks
 set('default_stage', 'production');
 

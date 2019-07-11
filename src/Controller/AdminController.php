@@ -85,7 +85,7 @@ class AdminController extends BaseAdminController
             ),
             'Activity' => array(
                 'name' => 'activities',
-                'icon' => 'ravelry',
+                'icon' => 'list-ul',
                 'number' => $activities,
                 'menuIndex' => '2',
                 'submenuIndex' => '0'

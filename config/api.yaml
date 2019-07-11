@@ -14,5 +14,5 @@ api:
     - { name: Job, showAll: job, showAllCondition: 'job.isValidate = 1', showOne: job }
     - { name: Project, showAll: project, showAllCondition: 'project.isValidate = 1 and project.isEligibleCIR = 1', showOne: project }
     - { name: Task, showAll: task, showAllCondition: 'task.isValidate = 1', showOne: task }
-    - { name: Settings, showAll: setting, showOne: settings }
+    - { name: Settings, showAll: settings, showOne: settings }
     - { name: WorkingTime, showAll: working_time, showAllCondition: 'working_time.isValidate = 1', showOne: working_time }

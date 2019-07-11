@@ -50,13 +50,14 @@ class ApiController extends AbstractController
 
                 // Insert new Working Time
                 if ($apiConfig['name'] === 'WorkingTime') {
+                    $post = (array) json_decode(file_get_contents('php://input'));
                     $object = new WorkingTime();
-                    $object->setUser(isset($_POST['user_id']) ? $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $_POST['user_id']]) : '');
-                    $object->setProject(isset($_POST['project_id']) ? $this->getDoctrine()->getRepository('App\Entity\Project')->findOneBy(['id' => $_POST['project_id']]) : '');
-                    $object->setTask(isset($_POST['task_id']) ? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => $_POST['task_id']]) : '');
-                    $object->setDate(new \DateTime(isset($_POST['date']) ? $_POST['date'] : ''));
-                    $object->setSpentTime(isset($_POST['spent_time']) ? $_POST['spent_time'] : 0);
-                    $object->setDescription(isset($_POST['description']) ? $_POST['description'] : '');
+                    $object->setUser(isset($post['user_id']) ? $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $post['user_id']]) : '');
+                    $object->setProject(isset($post['project_id']) ? $this->getDoctrine()->getRepository('App\Entity\Project')->findOneBy(['id' => $post['project_id']]) : '');
+                    $object->setTask(isset($post['task_id']) ? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => $post['task_id']]) : '');
+                    $object->setDate(new \DateTime(isset($post['date']) ? $post['date'] : ''));
+                    $object->setSpentTime(isset($post['spent_time']) ? $post['spent_time'] : 0);
+                    $object->setDescription(isset($post['description']) ? $post['description'] : '');
 
                     $this->em->persist($object);
                     $this->em->flush();
@@ -64,7 +65,6 @@ class ApiController extends AbstractController
 
                 // Update User RGPD
                 if ($apiConfig['name'] === 'User') {
-                    //$post = json_decode(file_get_contents('php://input'));
                     $post = (array) json_decode(file_get_contents('php://input'));
                     $user = $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $post['id']]);
                     $object = clone $user;
@@ -132,10 +132,12 @@ class ApiController extends AbstractController
                                 // Get last project of user
                                 $lastProjectUser = $this->getDoctrine()->getRepository('App\Entity\Project')->getLastProject($request->query->get('id'));
                                 if (empty($lastProjectUser)) {$lastProjectUser[0]['id'] = 0;}
+                                $lastProjectUser[0]['tag'] = 'last';
 
                                 // Get last project created
                                 $lastProjectCreated = $this->getDoctrine()->getRepository('App\Entity\Project')->getLastCreatedProject();
                                 if (empty($lastProjectCreated)) {$lastProjectCreated[0]['id'] = 0;}
+                                $lastProjectCreated[0]['tag'] = 'new';
 
                                 // Get 8 most used projects order by most used (last month)
                                 $allProjectsLastMonth = $this->getDoctrine()->getRepository('App\Entity\Project')->findByWithFields();
@@ -143,8 +145,13 @@ class ApiController extends AbstractController
 
                                 $whereMostUsed = implode(',', array_map(function($value){return $value['id']; }, $allProjectsLastMonth));
                                 $mostUsedProject = $this->getDoctrine()->getRepository('App\Entity\WorkingTime')->getMostUsed($whereMostUsed);
+                                $mostUsedProject = array_map(function ($value) {
+                                    $value['id'] = intval($value['id']);
+                                    $value['tag'] = 'most used';
+                                    return $value;
+                                }, $mostUsedProject);
 
-                                $entityObject = array_map(function ($value) {return intval($value['id']);}, array_merge($lastProjectUser, $lastProjectCreated, $mostUsedProject));
+                                $entityObject = array_merge($lastProjectUser, $lastProjectCreated, $mostUsedProject);
                             } else {
                                 return new JsonResponse('Aucun paramètre "id" correspondant à l\'id utilisateur trouvé');
                             }
