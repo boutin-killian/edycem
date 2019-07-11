@@ -52,9 +52,9 @@ class ApiController extends AbstractController
                 if ($apiConfig['name'] === 'WorkingTime') {
                     $post = (array) json_decode(file_get_contents('php://input'));
                     $object = new WorkingTime();
-                    $object->setUser(isset($post['user_id']) ? $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => $post['user_id']]) : '');
-                    $object->setProject(isset($post['project_id']) ? $this->getDoctrine()->getRepository('App\Entity\Project')->findOneBy(['id' => $post['project_id']]) : '');
-                    $object->setTask(isset($post['task_id']) ? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => $post['task_id']]) : '');
+                    $object->setUser(isset($post['user_id']) ? $this->getDoctrine()->getRepository('App\Entity\User')->findOneBy(['id' => intval($post['user_id'])]) : '');
+                    $object->setProject(isset($post['project_id']) ? $this->getDoctrine()->getRepository('App\Entity\Project')->findOneBy(['id' => intval($post['project_id'])]) : '');
+                    $object->setTask(isset($post['task_id']) ? $this->getDoctrine()->getRepository('App\Entity\Task')->findOneBy(['id' => intval($post['task_id'])]) : '');
                     $object->setDate(new \DateTime(isset($post['date']) ? $post['date'] : ''));
                     $object->setSpentTime(isset($post['spent_time']) ? $post['spent_time'] : 0);
                     $object->setDescription(isset($post['description']) ? $post['description'] : '');

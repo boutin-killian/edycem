@@ -46,7 +46,7 @@ set('clear_paths', [
 
 // Hosts
 host('production')
-    ->hostname('35.205.78.82')
+    ->hostname('34.76.155.185')
     ->user('root')
     ->forwardAgent()
     ->set('deploy_path', '/var/www/html');
@@ -80,8 +80,8 @@ task('deploy:cache:warmup', function () {
 desc('Build CSS/JS and deploy local built files');
 task('deploy:build_local_assets', function () {
     runLocally('npm install');
-    runLocally('npm run prod');
-    upload('./public/build', '{{release_path}}/public/.');
+    runLocally('npm run watch');
+    upload('../../public/build', '{{release_path}}/.');
 });
 
 after('deploy:failed', 'deploy:unlock');
@@ -100,8 +100,6 @@ task('deploy', [
     'deploy:cache:clear',
     'deploy:cache:warmup',
     'deploy:writable',
-    'deploy:cache:clear',
-    'deploy:cache:warmup',
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
