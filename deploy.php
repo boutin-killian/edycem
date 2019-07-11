@@ -80,7 +80,7 @@ task('deploy:cache:warmup', function () {
 desc('Build CSS/JS and deploy local built files');
 task('deploy:build_local_assets', function () {
     runLocally('npm install');
-    runLocally('npm run prod');
+    runLocally('npm run dev');
     upload('../../public/build', '{{release_path}}/.');
 });
 

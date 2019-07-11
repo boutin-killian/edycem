@@ -10,7 +10,7 @@
 api:
   entities:
     - { name: User, showAll: user, showAllCondition: 'user.enabled = 1 and user.isEligible = 1', showOne: user }
-      - { name: Activity, showAll: activity, showAllCondition: 'activity.isValidate = 1', showOne: activity }
+    - { name: Activity, showAll: activity, showAllCondition: 'activity.isValidate = 1', showOne: activity }
     - { name: Job, showAll: job, showAllCondition: 'job.isValidate = 1', showOne: job }
     - { name: Project, showAll: project, showAllCondition: 'project.isValidate = 1 and project.isEligibleCIR = 1', showOne: project }
     - { name: Task, showAll: task, showAllCondition: 'task.isValidate = 1', showOne: task }
