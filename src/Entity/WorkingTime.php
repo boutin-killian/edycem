@@ -22,7 +22,7 @@ class WorkingTime
     private $date;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", precision=6, scale=2)
      */
     private $spentTime;
 
@@ -71,14 +71,14 @@ class WorkingTime
         return $this;
     }
 
-    public function getSpentTime(): ?int
+    public function getSpentTime()
     {
-        return $this->spentTime;
+        return $this->spentTime / 60;
     }
 
-    public function setSpentTime(int $spentTime): self
+    public function setSpentTime($spentTime): self
     {
-        $this->spentTime = $spentTime;
+        $this->spentTime = $spentTime * 60;
         return $this;
     }
 
