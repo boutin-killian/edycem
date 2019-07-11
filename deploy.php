@@ -81,7 +81,7 @@ desc('Build CSS/JS and deploy local built files');
 task('deploy:build_local_assets', function () {
     runLocally('npm install');
     runLocally('npm run prod');
-    upload('../../public/build', '{{release_path}}/build.');
+    upload('../../public/build', '{{release_path}}/public/.');
 });
 
 after('deploy:failed', 'deploy:unlock');
