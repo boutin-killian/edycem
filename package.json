@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@symfony/webpack-encore": "^0.22.4",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.0.1",
     "webpack-notifier": "^1.6.0"
