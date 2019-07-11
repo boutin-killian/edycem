@@ -6,7 +6,7 @@
         "ext-ctype": "*",
         "ext-iconv": "*",
         "easycorp/easyadmin-bundle": "^2.0",
-        "friendsofsymfony/ckeditor-bundle": "^2.0",
+        "friendsofsymfony/ckeditor-bundle": "^2.1",
         "friendsofsymfony/rest-bundle": "^2.5",
         "friendsofsymfony/user-bundle": "^2.1",
         "gedmo/doctrine-extensions": "^2.4",
@@ -25,6 +25,7 @@
         "symfony/security-bundle": "4.2.*",
         "symfony/security-core": "4.2.*",
         "symfony/security-guard": "4.2.*",
+        "symfony/serializer": "4.2.*",
         "symfony/swiftmailer-bundle": "^3.2",
         "symfony/twig-bundle": "4.2.*",
         "symfony/validator": "4.2.*",
@@ -58,7 +59,6 @@
     },
     "scripts": {
         "auto-scripts": {
-            "ckeditor:install --clear=drop": "symfony-cmd",
             "assets:install --symlink --relative %PUBLIC_DIR%": "symfony-cmd",
             "cache:clear": "symfony-cmd"
         },

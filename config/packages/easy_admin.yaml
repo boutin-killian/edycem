@@ -5,5 +5,5 @@ imports:
 easy_admin:
   formats:
     date:     'd/m/Y'
-    time:     'i:s'
+    time:     'H:i'
     datetime: 'd/m/Y'

@@ -1,7 +1,7 @@
 <?php
 namespace Deployer;
 
-require 'recipe/symfony.php';
+require 'recipe/common.php';
 
 // Project name
 set('allow_anonymous_stats', false);
@@ -21,16 +21,10 @@ set('writable_use_sudo', true);
 // Project repository
 set('repository', 'git@github.com:boutin-killian/edycem.git');
 
-// Shared files/dirs between deploys
-add('shared_files', [
-    '.env',
-    'public/.htaccess',
-    'public/robots.txt'
-]);
-add('shared_dirs', []);
-
-// Writable dirs by web server
-add('writable_dirs', []);
+set('shared_dirs', ['var/log', 'var/sessions']);
+set('shared_files', ['.env']);
+set('writable_dirs', ['var']);
+set('migrations_config', '');
 
 set('clear_paths', [
     './README.md',
@@ -60,6 +54,28 @@ host('production')
 // Tasks
 set('default_stage', 'production');
 
+set('bin/console', function () {
+    return parse('{{bin/php}} {{release_path}}/bin/console --no-interaction');
+});
+
+desc('Migrate database');
+task('database:migrate', function () {
+    $options = '--allow-no-migration';
+    if (get('migrations_config') !== '') {
+        $options = sprintf('%s --configuration={{release_path}}/{{migrations_config}}', $options);
+    }
+    run(sprintf('{{bin/console}} doctrine:migrations:migrate %s', $options));
+});
+
+desc('Clear cache');
+task('deploy:cache:clear', function () {
+    run('{{bin/console}} cache:clear --no-warmup');
+});
+desc('Warm up cache');
+task('deploy:cache:warmup', function () {
+    run('{{bin/console}} cache:warmup');
+});
+
 // BUILD PRODUCTION ASSETS
 desc('Build CSS/JS and deploy local built files');
 task('deploy:build_local_assets', function () {
@@ -71,6 +87,7 @@ task('deploy:build_local_assets', function () {
 after('deploy:failed', 'deploy:unlock');
 
 // TASKS
+desc('Deploy project');
 task('deploy', [
     'deploy:info',
     'deploy:prepare',
@@ -83,6 +100,8 @@ task('deploy', [
     'deploy:cache:clear',
     'deploy:cache:warmup',
     'deploy:writable',
+    'deploy:cache:clear',
+    'deploy:cache:warmup',
     'deploy:clear_paths',
     'deploy:symlink',
     'deploy:unlock',
